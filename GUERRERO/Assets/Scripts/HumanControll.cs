@@ -1,49 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class HumanControll : MonoBehaviour
+public class HumanControll : MonoBehaviourPunCallbacks
 {
-    CharacterController _controller;
-    Animator _animator;
-
+     PhotonView view;
      float inputX;
      float inputZ;
-     Vector3 v_Movement;
-    public float movespeed;
-    public float jumpforce;
-    public float gravity;
+     Vector3 v_Movement;   
 
     private void Start()
     {
-
-        GameObject tempPlayer = this.gameObject;
-        _controller = tempPlayer.GetComponent<CharacterController>();
-        _animator = tempPlayer.GetComponent<Animator>();
+        view = GetComponent<PhotonView>();
     }
 
     private void Update()
     {
-        inputX = Input.GetAxis("Horizontal");
-        inputZ = Input.GetAxis("Vertical");
+        if (view.IsMine)
+        {
+            inputX = Input.GetAxis("Horizontal");
+            inputZ = Input.GetAxis("Vertical");
 
-        if (inputX == 0 && inputZ == 0)
-        {
-            _animator.SetBool("isRunning", false);
-        }
-        else
-        {
-            _animator.SetBool("isRunning", true);
-        }
+            if (inputX == 0 && inputZ == 0)
+            {
+                CharacterCore.Instance.characterData._animator.SetBool("isRunning", false);
+            }
+            else
+            {
+                CharacterCore.Instance.characterData._animator.SetBool("isRunning", true);
+            }
+        }        
     }
 
     private void FixedUpdate()
     {
-        if (_controller.isGrounded)
+        if (CharacterCore.Instance.characterData._controller.isGrounded)
         {
             if (Input.GetKey(KeyCode.Space))
             {
-                v_Movement.y = jumpforce;
+                //CharacterCore.Instance.TakeDamnge(CharacterCore.Instance.characterData.damage);
+                v_Movement.y = CharacterCore.Instance.characterData.jumpForce;
             }
             else
             {
@@ -52,11 +49,11 @@ public class HumanControll : MonoBehaviour
         }
         else
         {
-            v_Movement.y -= gravity * Time.deltaTime;
+            v_Movement.y -= CharacterCore.Instance.characterData.gravity * Time.deltaTime;
         }
 
-        v_Movement = new Vector3(inputX * movespeed, v_Movement.y , inputZ * movespeed);
-        _controller.Move(v_Movement);
+        v_Movement = new Vector3(inputX * CharacterCore.Instance.characterData.moveSpeed, v_Movement.y , inputZ * CharacterCore.Instance.characterData.moveSpeed);
+        CharacterCore.Instance.characterData._controller.Move(v_Movement);
 
         if ((inputZ != 0 || inputX != 0))
         {
