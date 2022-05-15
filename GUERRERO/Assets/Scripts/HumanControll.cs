@@ -8,7 +8,9 @@ public class HumanControll : MonoBehaviourPunCallbacks
      PhotonView view;
      float inputX;
      float inputZ;
-     Vector3 v_Movement;   
+     Vector3 direction;
+
+     float directionY;
 
     private void Start()
     {
@@ -22,6 +24,8 @@ public class HumanControll : MonoBehaviourPunCallbacks
             inputX = Input.GetAxis("Horizontal");
             inputZ = Input.GetAxis("Vertical");
 
+
+
             if (inputX == 0 && inputZ == 0)
             {
                 CharacterCore.Instance.characterData._animator.SetBool("isRunning", false);
@@ -30,35 +34,40 @@ public class HumanControll : MonoBehaviourPunCallbacks
             {
                 CharacterCore.Instance.characterData._animator.SetBool("isRunning", true);
             }
-        }        
+
+        }
     }
 
     private void FixedUpdate()
     {
-        if (CharacterCore.Instance.characterData._controller.isGrounded)
+        if (view.IsMine)
         {
-            if (Input.GetKey(KeyCode.Space))
+            if (CharacterCore.Instance.characterData._controller.isGrounded)
             {
-                //CharacterCore.Instance.TakeDamnge(CharacterCore.Instance.characterData.damage);
-                v_Movement.y = CharacterCore.Instance.characterData.jumpForce;
+                if (Input.GetKey(KeyCode.Space))
+                {
+                    CharacterCore.Instance.TakeDamnge(CharacterCore.Instance.characterData.damage);
+                    directionY = CharacterCore.Instance.characterData.jumpForce;
+                }
+                else
+                {
+                    directionY = 0f;
+                }
             }
             else
             {
-                v_Movement.y = 0f;
+                directionY -= CharacterCore.Instance.characterData.gravity * Time.deltaTime;
             }
-        }
-        else
-        {
-            v_Movement.y -= CharacterCore.Instance.characterData.gravity * Time.deltaTime;
-        }
 
-        v_Movement = new Vector3(inputX * CharacterCore.Instance.characterData.moveSpeed, v_Movement.y , inputZ * CharacterCore.Instance.characterData.moveSpeed);
-        CharacterCore.Instance.characterData._controller.Move(v_Movement);
+            direction = new Vector3(inputX * CharacterCore.Instance.characterData.moveSpeed, direction.y, inputZ * CharacterCore.Instance.characterData.moveSpeed);
+            direction.y = directionY;
+            CharacterCore.Instance.characterData._controller.Move(direction);
 
-        if ((inputZ != 0 || inputX != 0))
-        {
-            Vector3 facing = new Vector3(v_Movement.x, 0, v_Movement.z);
-            transform.rotation = Quaternion.LookRotation(facing);
-        }
+            if ((inputZ != 0 || inputX != 0))
+            {
+                Vector3 facing = new Vector3(direction.x, 0, direction.z);
+                transform.rotation = Quaternion.LookRotation(facing);
+            }
+        }        
     }
 }
