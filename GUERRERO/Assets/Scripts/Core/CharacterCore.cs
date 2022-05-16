@@ -20,8 +20,8 @@ public class CharacterCore : MonoBehaviourPunCallbacks
         public float damage;
         public float armor;
         public int coin;
-    }
-    
+    }    
+
     //-------Singleton
     PhotonView view;
     public static CharacterCore Instance;    

@@ -14,7 +14,7 @@ public class ServerCore : MonoBehaviourPunCallbacks
     [SerializeField] InputField joinInput;
 
     [SerializeField] Button connectButton;
-
+    [SerializeField] Text status;
     public enum SceneName
     {
         Lobby,
@@ -48,12 +48,12 @@ public class ServerCore : MonoBehaviourPunCallbacks
     //-----OnClick
     public void ClickCreateRoom()
     {
-        PhotonNetwork.CreateRoom(createInput.text);
+        PhotonNetwork.CreateRoom(createInput.text , new Photon.Realtime.RoomOptions() { MaxPlayers = 2});
     }
 
     public void ClickJoinRoom()
-    {
-        PhotonNetwork.JoinRoom(joinInput.text);
+    {        
+        PhotonNetwork.JoinRoom(joinInput.text);        
     }
 
     public void ClickConnect()
@@ -67,5 +67,11 @@ public class ServerCore : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         PhotonNetwork.LoadLevel(PlayScene.ToString());
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        status.text = "FULL ROOM";
+        base.OnJoinRoomFailed(returnCode, message);
     }
 }

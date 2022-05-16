@@ -13,6 +13,7 @@ public class UiCore : MonoBehaviour
     private void Start()
     {
     }
+
     private void FixedUpdate()
     {
         if (characterData == null)

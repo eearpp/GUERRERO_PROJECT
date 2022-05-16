@@ -6,23 +6,32 @@ using Photon.Pun;
 public class PlayCore : MonoBehaviourPunCallbacks
 {
     public static PlayCore Instance;
+    PhotonView view;
 
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance == null)
         {
-            Destroy(gameObject);
-            return;
+            Instance = this;
         }
-        Instance = this;        
     }
 
     [SerializeField] GameObject playerPrefab;
-    [SerializeField] GameObject spawnTarget;
+    [SerializeField] GameObject spawnTarget1;
+    [SerializeField] GameObject spawnTarget2;
 
     private void Start()
     {
-        SpwanObj(spawnTarget, playerPrefab);
+        view = GetComponent<PhotonView>();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            SpwanObj(spawnTarget1, playerPrefab);
+        }
+        else if (!PhotonNetwork.IsMasterClient)
+        {
+            SpwanObj(spawnTarget2, playerPrefab);
+        }
+        
     }
 
     public void SpwanObj(GameObject target , GameObject ObjPrefab)

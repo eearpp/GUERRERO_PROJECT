@@ -46,7 +46,7 @@ public class HumanControll : MonoBehaviourPunCallbacks
             {
                 if (Input.GetKey(KeyCode.Space))
                 {
-                    CharacterCore.Instance.TakeDamnge(CharacterCore.Instance.characterData.damage);
+                    //CharacterCore.Instance.TakeDamnge(CharacterCore.Instance.characterData.damage);
                     directionY = CharacterCore.Instance.characterData.jumpForce;
                 }
                 else
