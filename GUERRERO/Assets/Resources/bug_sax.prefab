@@ -340,7 +340,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6390386827655483067}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!137 &6393783639211979954
 SkinnedMeshRenderer:
@@ -799,7 +799,7 @@ Transform:
   - {fileID: 3349259635324377360}
   - {fileID: 1195597871181307324}
   m_Father: {fileID: 6390386827655483067}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5858023622542147621
 GameObject:
@@ -865,8 +865,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 17.66, z: -3.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1513038204326112815}
   - {fileID: 6624871366481293287}
+  - {fileID: 1513038204326112815}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -983,10 +983,13 @@ MonoBehaviour:
   characterData:
     _controller: {fileID: 6856043836006329699}
     _animator: {fileID: 6856043836006329629}
+    playerName: 
+    playerLevel: 0
     moveSpeed: 1.5
     jumpForce: 2
     gravity: 9.81
-    health: 100
+    maxhealth: 100
+    currentHealth: 0
     damage: 20
     armor: 0
     coin: 5

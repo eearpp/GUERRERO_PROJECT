@@ -11,12 +11,15 @@ public class CharacterCore : MonoBehaviourPunCallbacks
     {
         public CharacterController _controller;
         public Animator _animator;
+        public string playerName;
+        public int playerLevel;
 
         public float moveSpeed;
         public float jumpForce;
         public float gravity;
 
-        public float health;
+        public float maxhealth;
+        public float currentHealth;
         public float damage;
         public float armor;
         public int coin;
@@ -39,6 +42,9 @@ public class CharacterCore : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        characterData.playerName = ServerCore.Instance.namePlayer;
+
+        characterData.currentHealth = characterData.maxhealth;
         view = GetComponent<PhotonView>();
         if (!characterData._controller || !characterData._animator)
         {
@@ -57,7 +63,7 @@ public class CharacterCore : MonoBehaviourPunCallbacks
     {
         if (view.IsMine)
         {
-            characterData.health = characterData.health - damange;
+            characterData.currentHealth = characterData.currentHealth - damange;
         }        
     }
 }

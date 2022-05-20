@@ -20,7 +20,7 @@ public class UiCore : MonoBehaviour
         {
             characterData = CharacterCore.Instance.characterData;
         }
-        healthText.text = "HEALTH :" + characterData.health.ToString();
+        healthText.text = "HEALTH :" + characterData.currentHealth.ToString();
         coinText.text = "COIN :" + characterData.coin.ToString();
     }
 }

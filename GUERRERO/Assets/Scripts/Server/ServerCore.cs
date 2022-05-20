@@ -7,14 +7,30 @@ using UnityEngine.SceneManagement;
 
 public class ServerCore : MonoBehaviourPunCallbacks
 {
+    //-------Singleton
+    public static ServerCore Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+    }
+    //-------Singleton
     [SerializeField] GameObject loading_canvas;
     [SerializeField] GameObject lobby_canvas;
 
     [SerializeField] InputField createInput;
     [SerializeField] InputField joinInput;
+    [SerializeField] InputField nameInput;
 
     [SerializeField] Button connectButton;
     [SerializeField] Text status;
+    [SerializeField] Text myName;
+
+    public string namePlayer;
+
     public enum SceneName
     {
         Lobby,
@@ -51,13 +67,26 @@ public class ServerCore : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(createInput.text , new Photon.Realtime.RoomOptions() { MaxPlayers = 2});
     }
 
+
     public void ClickJoinRoom()
-    {        
+    {
         PhotonNetwork.JoinRoom(joinInput.text);        
     }
 
     public void ClickConnect()
     {
+        if (nameInput.text == "")
+        {
+            float randomNumber = Random.Range(0, 9999);
+            namePlayer = randomNumber.ToString();
+        }
+        else
+        {
+            namePlayer = nameInput.text;
+        }
+
+        myName.text = "HELLO " + namePlayer;        
+
         GameObject buttText = connectButton.transform.GetChild(0).gameObject;
         Text connectText = buttText.GetComponent<Text>();
         connectText.text = "Connecting....";
@@ -66,7 +95,7 @@ public class ServerCore : MonoBehaviourPunCallbacks
     //-----OnClick
     public override void OnJoinedRoom()
     {
-        PhotonNetwork.LoadLevel(PlayScene.ToString());
+        PhotonNetwork.LoadLevel(PlayScene.ToString());        
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
