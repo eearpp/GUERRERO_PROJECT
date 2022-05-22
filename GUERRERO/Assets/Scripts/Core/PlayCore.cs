@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 
-public class PlayCore : MonoBehaviourPunCallbacks
+public class PlayCore : MonoBehaviour
 {
     public static PlayCore Instance;
     PhotonView view;
@@ -46,7 +46,7 @@ public class PlayCore : MonoBehaviourPunCallbacks
     [SerializeField] Material blue;
 
     //Debuger Text
-    [SerializeField] Text DebugerText;
+    //[SerializeField] Text DebugerText;
 
 
     private void Start()
@@ -73,6 +73,7 @@ public class PlayCore : MonoBehaviourPunCallbacks
             SpwanObj(spawnHouseBaseTarget2, houseBasePrefab, ObjType.BaseHouse, out house1tmp);
 
             view.RPC("ChangeTexter", RpcTarget.All, player1tmp.name, 0, 1);
+
             view.RPC("ChangeTexter", RpcTarget.All, house1tmp.name, 0, 1);
         }
 
@@ -97,7 +98,7 @@ public class PlayCore : MonoBehaviourPunCallbacks
     public void SpwanObj(GameObject target, GameObject ObjPrefab, ObjType type, out GameObject myObj)
     {
         GameObject OBJ = PhotonNetwork.Instantiate(ObjPrefab.name, target.transform.position, Quaternion.identity);
-        view.RPC("ChangeName", RpcTarget.All, OBJ.name, type.ToString());
+        //view.RPC("ChangeName", RpcTarget.All, OBJ.name, type.ToString());
         myObj = OBJ;
     }
 
@@ -105,7 +106,7 @@ public class PlayCore : MonoBehaviourPunCallbacks
     public void ChangeName(string objname, string objType)
     {
         GameObject obj = GameObject.Find(objname);
-        DebugerText.text = ServerCore.Instance.namePlayer;
+       // DebugerText.text = ServerCore.Instance.namePlayer;
         string newName = ServerCore.Instance.namePlayer + "_" + objType;
         obj.name = newName;
 

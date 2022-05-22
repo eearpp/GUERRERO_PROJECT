@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-public class CharacterCore : MonoBehaviourPunCallbacks
+public class CharacterCore : MonoBehaviour
 {
     [System.Serializable]
     public class CharacterData
@@ -42,15 +42,19 @@ public class CharacterCore : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        characterData.playerName = ServerCore.Instance.namePlayer;
-
-        characterData.currentHealth = characterData.maxhealth;
         view = GetComponent<PhotonView>();
-        if (!characterData._controller || !characterData._animator)
+
+        if (view.IsMine)
         {
-            GameObject tempPlayer = this.gameObject;
-            characterData._controller = tempPlayer.GetComponent<CharacterController>();
-            characterData._animator = tempPlayer.GetComponent<Animator>();
+            characterData.playerName = ServerCore.Instance.namePlayer;
+
+            characterData.currentHealth = characterData.maxhealth;
+            if (!characterData._controller || !characterData._animator)
+            {
+                GameObject tempPlayer = this.gameObject;
+                characterData._controller = tempPlayer.GetComponent<CharacterController>();
+                characterData._animator = tempPlayer.GetComponent<Animator>();
+            }
         }
     }
 

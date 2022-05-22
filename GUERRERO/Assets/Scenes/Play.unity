@@ -879,8 +879,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1584291842}
-  - component: {fileID: 1584291841}
   - component: {fileID: 1584291843}
+  - component: {fileID: 1584291841}
+  - component: {fileID: 1584291844}
   m_Layer: 0
   m_Name: PlayCore
   m_TagString: Untagged
@@ -910,7 +911,6 @@ MonoBehaviour:
   timeToLaunch: 0
   red: {fileID: 2100000, guid: 610e69ce49bc28e4cab6238c91750cee, type: 2}
   blue: {fileID: 2100000, guid: 3a2fb10e4c151964e874e5d0a55a821f, type: 2}
-  DebugerText: {fileID: 1351829668}
 --- !u!4 &1584291842
 Transform:
   m_ObjectHideFlags: 0
@@ -943,10 +943,25 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1584291844}
   sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &1584291844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1584291840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be3c4e8c0dea8364080789ec697dccc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultTimeValue: 5
+  timeText: {fileID: 1351829668}
 --- !u!1 &1585472121
 GameObject:
   m_ObjectHideFlags: 0

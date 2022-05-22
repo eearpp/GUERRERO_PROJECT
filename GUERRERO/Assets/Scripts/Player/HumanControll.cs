@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class HumanControll : MonoBehaviourPunCallbacks
+public class HumanControll : MonoBehaviour
 {
      PhotonView view;
      float inputX;
@@ -46,7 +46,7 @@ public class HumanControll : MonoBehaviourPunCallbacks
             {
                 if (Input.GetKey(KeyCode.Space))
                 {
-                    //CharacterCore.Instance.TakeDamnge(CharacterCore.Instance.characterData.damage);
+                    CharacterCore.Instance.TakeDamnge(CharacterCore.Instance.characterData.damage);
                     directionY = CharacterCore.Instance.characterData.jumpForce;
                 }
                 else
